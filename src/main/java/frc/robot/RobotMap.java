@@ -10,7 +10,7 @@ public class RobotMap {
   }
 
   public static class Arm {
-    public static final int pivot = 21;
+    public static final int pivot = 50;
     public static final int endEffector = 22;
   }
 

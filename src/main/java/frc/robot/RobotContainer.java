@@ -11,6 +11,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIO;
 import frc.robot.subsystems.arm.ArmIOSim;
+import frc.robot.subsystems.arm.ArmIOSparkMax;
 import frc.robot.subsystems.arm.ArmIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -92,7 +93,7 @@ public class RobotContainer {
                 new VisionIOSouthStar(drive::getPose, VisionConstants.camProps));
         gripper = new Gripper(new GripperIOSim());
         elevator = new Elevator(new ElevatorIOSparkMax());
-        arm = new Arm(new ArmIOTalonFX());
+        arm = new Arm(new ArmIOSparkMax());
         break;
 
       case SIM:
@@ -211,6 +212,8 @@ public class RobotContainer {
     driver.a().whileTrue(
         Commands.runOnce(()-> elevator.setPosition(SuperstructureSetpoint.L1.height))
     );
+
+    driver.povRight().whileTrue(Commands.runOnce(()-> arm.positionCommand(()-> 0.0)));
     // driver
     //     .a()
     //     .whileTrue(
