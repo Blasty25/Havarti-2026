@@ -10,7 +10,7 @@ import frc.robot.util.LoggedTunableNumber;
 /** Add your docs here. */
 public class ArmConstants {
   public class Mechanism {
-    public static final double gearing = 39.85;
+    public static final double gearing = 1.0 / 39.85;
     public static final boolean inverted = true;
     public static final double tolerance = 0.02;
     public static final double armLength = Units.inchesToMeters(28);

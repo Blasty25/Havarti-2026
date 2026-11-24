@@ -50,7 +50,7 @@ public class ArmIOSim implements ArmIO {
 
     armSim.setInputVoltage(pidController.calculate(armSim.getAngleRads()));
 
-    data.ArmAngle = Rotation2d.fromRadians(armSim.getAngleRads());
+    data.ArmAngle = armSim.getAngleRads();
     data.ArmVelocity = armSim.getVelocityRadPerSec();
     data.MotorConnected = true;
     data.MotorStatorCurrent = (int) armSim.getCurrentDrawAmps();

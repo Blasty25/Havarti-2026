@@ -41,7 +41,7 @@ public class Arm extends SubsystemBase {
                   log.motor("Arm")
                       .voltage(Volts.of(data.MotorVoltage))
                       .current(Amps.of(data.MotorStatorCurrent))
-                      .angularPosition(Rotations.of(data.ArmAngle.getRotations()))
+                      .angularPosition(Rotations.of(data.ArmAngle))
                       .angularVelocity(
                           RotationsPerSecond.of(Units.radiansToRotations(data.ArmVelocity)));
                 },
@@ -64,7 +64,7 @@ public class Arm extends SubsystemBase {
 
   // returns rads
   public double getAngle() {
-    return data.ArmAngle.getRadians();
+    return data.ArmAngle;
   }
 
   public Command sysID() {
@@ -86,7 +86,7 @@ public class Arm extends SubsystemBase {
   @AutoLogOutput(key = "Arm/Setpoint")
   public boolean atSetpoint() {
     return MathUtil.isNear(
-        data.setpoint, data.ArmAngle.getRadians(), ArmConstants.Mechanism.tolerance);
+        data.setpoint, data.ArmAngle, ArmConstants.Mechanism.tolerance);
   }
 
   @Override

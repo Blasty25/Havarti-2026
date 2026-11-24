@@ -11,7 +11,7 @@ import org.littletonrobotics.junction.AutoLog;
 public interface ArmIO {
   @AutoLog
   public class ArmData {
-    public Rotation2d ArmAngle = Rotation2d.kZero;
+    public double ArmAngle = 0.0;
     public double ArmVelocity = 0.0;
     public double ArmAcceleration = 0.0;
     public double setpoint = 0.0;

@@ -8,11 +8,12 @@ import static frc.robot.subsystems.arm.ArmConstants.Tuning.*;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -33,24 +34,29 @@ public class ArmIOSparkMax implements ArmIO {
 
   public ArmIOSparkMax() {
     sparkMaxConfig.closedLoop.feedForward.svag(ArmConstants.Tuning.kS.get(), ArmConstants.Tuning.kV.get(),
-        ArmConstants.Tuning.kA.get(), ArmConstants.Tuning.kG.get());
+        ArmConstants.Tuning.kA.get(), 0.0);
     sparkMaxConfig.closedLoop.pid(ArmConstants.Tuning.kP.get(), ArmConstants.Tuning.kI.get(),
         ArmConstants.Tuning.kD.get());
+    sparkMaxConfig.closedLoop.positionWrappingEnabled(true);
+    sparkMaxConfig.closedLoop.positionWrappingInputRange(-0.5, 0.5);
+    sparkMaxConfig.closedLoop.feedForward.kCos(ArmConstants.Tuning.kG.get());
+    sparkMaxConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
     sparkMaxConfig.idleMode(IdleMode.kBrake);
     sparkMaxConfig.encoder.positionConversionFactor(ArmConstants.Mechanism.gearing);
-    sparkMaxConfig.encoder.velocityConversionFactor(ArmConstants.Mechanism.gearing / 60);
+    sparkMaxConfig.encoder.velocityConversionFactor(ArmConstants.Mechanism.gearing / 60.0);
     this.controller = sparkMax.getClosedLoopController();
     sparkMax.configure(sparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    sparkMax.getEncoder().setPosition(Units.radiansToDegrees(Math.PI / 2));
+    sparkMax.getEncoder().setPosition(0.25);
 
   }
 
   @Override
   public void getData(ArmData data) {
 
-    data.ArmAngle = Rotation2d.fromRotations(sparkMax.getEncoder().getPosition());
+    data.ArmAngle = sparkMax.getEncoder().getPosition();
     data.MotorVoltage = sparkMax.getBusVoltage() * sparkMax.getAppliedOutput();
     data.MotorSupplyCurrent = sparkMax.getOutputCurrent();
+    data.setpoint = setpoint;
     
 
     // Resetting PID & FF Values

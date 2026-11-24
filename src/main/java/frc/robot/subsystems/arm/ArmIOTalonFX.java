@@ -142,7 +142,7 @@ public class ArmIOTalonFX implements ArmIO {
     data.ArmAcceleration = accelerationSignal.getValueAsDouble();
     data.ArmVelocity = velocitySignal.getValueAsDouble();
     data.ArmAngle =
-        Rotation2d.fromRadians(Units.rotationsToRadians(positionSignal.getValueAsDouble()));
+        Units.rotationsToRadians(positionSignal.getValueAsDouble());
     data.MotorVoltage = mVolts.getValueAsDouble();
     data.MotorTemperature = temperature.getValueAsDouble();
     data.MotorStatorCurrent = stator.getValueAsDouble();

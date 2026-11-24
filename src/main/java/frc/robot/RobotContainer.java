@@ -48,11 +48,11 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   // Subsystems
-  public final Drive drive;
+//   public final Drive drive;
   private final Elevator elevator;
-  private final Vision vision;
+//   private final Vision vision;
   private final Arm arm;
-  private final Gripper gripper;
+//   private final Gripper gripper;
 //   private final Superstructure superstructure;
   private final AutoRoutines auto;
 
@@ -68,82 +68,82 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        drive =
-            new Drive(
-                new GyroIOPigeon2(),
-                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                new ModuleIOTalonFX(TunerConstants.BackRight));
+        // drive =
+        //     new Drive(
+        //         new GyroIOPigeon2(),
+        //         new ModuleIOTalonFX(TunerConstants.FrontLeft),
+        //         new ModuleIOTalonFX(TunerConstants.FrontRight),
+        //         new ModuleIOTalonFX(TunerConstants.BackLeft),
+        //         new ModuleIOTalonFX(TunerConstants.BackRight));
 
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                FieldConstants.fieldLayout,
-                new VisionIOPhotonVision(
-                    "CamLeft",
-                    VisionConstants.robotToLeftCam,
-                    drive::getRotation,
-                    FieldConstants.fieldLayout),
-                new VisionIOPhotonVision(
-                    "CamRight",
-                    VisionConstants.robotToRightCam,
-                    drive::getRotation,
-                    FieldConstants.fieldLayout),
-                new VisionIOSouthStar(drive::getPose, VisionConstants.camProps));
-        gripper = new Gripper(new GripperIOSim());
+        // vision =
+        //     new Vision(
+        //         drive::addVisionMeasurement,
+        //         FieldConstants.fieldLayout,
+        //         new VisionIOPhotonVision(
+        //             "CamLeft",
+        //             VisionConstants.robotToLeftCam,
+        //             drive::getRotation,
+        //             FieldConstants.fieldLayout),
+        //         new VisionIOPhotonVision(
+        //             "CamRight",
+        //             VisionConstants.robotToRightCam,
+        //             drive::getRotation,
+        //             FieldConstants.fieldLayout),
+        //         new VisionIOSouthStar(drive::getPose, VisionConstants.camProps));
+        // gripper = new Gripper(new GripperIOSim());
         elevator = new Elevator(new ElevatorIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight));
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                FieldConstants.fieldLayout,
-                new VisionIOPhotonVisionSim(
-                    "Left Cam",
-                    VisionConstants.robotToLeftCam,
-                    drive::getPose,
-                    VisionConstants.fieldLayout),
-                new VisionIOPhotonVisionSim(
-                    "Right Cam",
-                    VisionConstants.robotToRightCam,
-                    drive::getPose,
-                    VisionConstants.fieldLayout),
-                new VisionIOSouthStarSim(drive::getPose, VisionConstants.camProps));
+        // drive =
+        //     new Drive(
+        //         new GyroIO() {},
+        //         new ModuleIOSim(TunerConstants.FrontLeft),
+        //         new ModuleIOSim(TunerConstants.FrontRight),
+        //         new ModuleIOSim(TunerConstants.BackLeft),
+        //         new ModuleIOSim(TunerConstants.BackRight));
+        // vision =
+        //     new Vision(
+        //         drive::addVisionMeasurement,
+        //         FieldConstants.fieldLayout,
+        //         new VisionIOPhotonVisionSim(
+        //             "Left Cam",
+        //             VisionConstants.robotToLeftCam,
+        //             drive::getPose,
+        //             VisionConstants.fieldLayout),
+        //         new VisionIOPhotonVisionSim(
+        //             "Right Cam",
+        //             VisionConstants.robotToRightCam,
+        //             drive::getPose,
+        //             VisionConstants.fieldLayout),
+        //         new VisionIOSouthStarSim(drive::getPose, VisionConstants.camProps));
         arm = new Arm(new ArmIOSim());
         elevator = new Elevator(new ElevatorIOSim());
-        gripper = new Gripper(new GripperIOSim());
+        // gripper = new Gripper(new GripperIOSim());
         break;
 
       default:
         // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {});
+        // drive =
+        //     new Drive(
+        //         new GyroIO() {},
+        //         new ModuleIO() {},
+        //         new ModuleIO() {},
+        //         new ModuleIO() {},
+        //         new ModuleIO() {});
         elevator = new Elevator(new ElevatorIO() {});
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                FieldConstants.fieldLayout,
-                new VisionIO() {},
-                new VisionIO() {},
-                new VisionIO() {});
+        // vision =
+        //     new Vision(
+        //         drive::addVisionMeasurement,
+        //         FieldConstants.fieldLayout,
+        //         new VisionIO() {},
+        //         new VisionIO() {},
+        //         new VisionIO() {});
         arm = new Arm(new ArmIO() {});
-        gripper = new Gripper(new GripperIO() {});
+        // gripper = new Gripper(new GripperIO() {});
         break;
     }
 
@@ -169,7 +169,7 @@ public class RobotContainer {
     autoChooser.addOption("arm sys", arm.sysID());
 
     // Autos Autos
-    autoChooser.addOption("Match Auto Drive Fowards", auto.driveForward(drive));
+    // autoChooser.addOption("Match Auto Drive Fowards", auto.driveForward(drive));
     // autoChooser.addOption("Auto", auto.oneAlgaeAuto(drive, superstructure,
     // elevator, arm,
     // gripper));
@@ -213,7 +213,7 @@ public class RobotContainer {
         Commands.runOnce(()-> elevator.setPosition(SuperstructureSetpoint.L1.height))
     );
 
-    driver.povRight().whileTrue(Commands.runOnce(()-> arm.positionCommand(()-> 0.0)));
+    driver.povRight().whileTrue(arm.positionCommand(()-> Math.PI / 2.0));
     // driver
     //     .a()
     //     .whileTrue(
@@ -231,12 +231,13 @@ public class RobotContainer {
   }
 
   public Command resetGyro() {
-    return Commands.runOnce(
-        () ->
-            drive.setPose(
-                new Pose2d(
-                    drive.getPose().getTranslation(), AllianceFlipUtil.apply(Rotation2d.kZero))),
-        drive);
+    // return Commands.runOnce(
+    //     () ->
+    //         drive.setPose(
+    //             new Pose2d(
+    //                 drive.getPose().getTranslation(), AllianceFlipUtil.apply(Rotation2d.kZero))),
+    //     drive);
+    return Commands.none();
   }
 
 //   public Command getAutonomousCommand() {
